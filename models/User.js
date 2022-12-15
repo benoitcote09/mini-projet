@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
+
+/*
+   user: abbes role: user  [task1, task2]
+*/
 const UserSchema = new mongoose.Schema(
     {
         username: {
@@ -23,8 +27,12 @@ const UserSchema = new mongoose.Schema(
 )
 
 UserSchema.pre('save', function(next){
-    if(!this.isModified('password'))
+    console.log('inside pre-save')
+    if(!this.isModified('password')){
+        console.log('not modified')
         return next();
+    }
+    console.log('modified')
     bcrypt.hash(this.password, 10, (err, hashedPassword) =>{
         if(err)
             return next(err);
