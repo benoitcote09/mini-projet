@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const bcrypt = require('bcrypt');
 
 /*
    user: abbes role: user  [task1, task2]
@@ -24,7 +24,7 @@ const UserSchema = new mongoose.Schema(
         todos: [{type: mongoose.Schema.Types.ObjectId, ref: 'Todo'}]
     }
 )
-/*
+
 UserSchema.pre('save', function(next){
     console.log('inside pre-save')
     if(!this.isModified('password')){
@@ -39,7 +39,7 @@ UserSchema.pre('save', function(next){
         next()
     });
 });
-*/
+
 UserSchema.methods.comparePassword = function(password, cb){
     bcrypt.compare(password, this.password, (err, isMatch) => {
         if(err)
