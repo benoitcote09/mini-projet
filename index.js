@@ -18,9 +18,9 @@ app.use('/users', userRouter);
 
 // check which env we are using
 const database_url = process.env.NODE_ENV === 'development' ? process.env.DATABASE_URL : process.env.CLOUD_DATABASE_URL;
-console.log(database_url)
+console.log("database url",database_url)
 
-mongoose.set('strictQuery', false);
+mongoose.set('strictQuery', true);
 mongoose.connect(database_url, { useNewUrlParser: true });
 const db = mongoose.connection;
 db.on('error', (error) => console.error(error));

@@ -6,7 +6,7 @@ const User = require('../models/User');
 const Todo = require('../models/Todo');
 const JWT = require('jsonwebtoken');
 
-
+// generate token
 const signtoken = userId => {
     return JWT.sign({
         iss: 'abbes boulebtina inc.',
@@ -14,6 +14,7 @@ const signtoken = userId => {
     }, "abbes", {expiresIn: '1800s'});
 }
 
+// Register
 userRouter.post('/register', (req, res) => {
     const {username, password, role} = req.body;
     User.findOne({username}, (err, user) => {
@@ -33,7 +34,7 @@ userRouter.post('/register', (req, res) => {
     });
 });
 
-
+// login
 userRouter.post('/login', passport.authenticate('local', {session: false}),(req, res) => {
         const {_id, username, role} = req.user;
         const token = signtoken(_id);
@@ -46,7 +47,7 @@ userRouter.get('/logout', passport.authenticate('jwt', {session: false}), (req, 
     res.json({user: {username: "", role: ""}, success: true});
 });
 
-
+// Add TODO
 userRouter.post('/todo', passport.authenticate('jwt', {session: false}), (req, res) => {
     const todo = new Todo(req.body);
     todo.save((err) => {
@@ -64,7 +65,7 @@ userRouter.post('/todo', passport.authenticate('jwt', {session: false}), (req, r
     });
 });
 
-
+// display TODOS
 userRouter.get('/todos', passport.authenticate('jwt', {session: false}), (req, res) => {
     User.findById({_id: req.user._id}).populate('todos').exec((err, document) => {
         if(err)
@@ -74,7 +75,7 @@ userRouter.get('/todos', passport.authenticate('jwt', {session: false}), (req, r
     });
 });
 
-
+// modify TODO
 userRouter.patch('/todo', passport.authenticate('jwt', {session: false}), (req, res) => {
     const {_id, name} = req.body;
 
@@ -83,6 +84,20 @@ userRouter.patch('/todo', passport.authenticate('jwt', {session: false}), (req, 
             res.status(500).json({message: {msgBody: "error has occured", msgError: true}});
         else{
             res.status(200).json({todo: document, authenticated: true});
+        }
+
+    });
+});
+
+// delete TODO
+userRouter.delete('/todo', passport.authenticate('jwt', {session: false}), (req, res) => {
+    const {_id} = req.body;
+
+    Todo.findByIdAndDelete(_id,  (err, document) => {
+        if(err)
+            res.status(500).json({message: {msgBody: "error has occured", msgError: true}});
+        else{
+            res.status(200).json({todo: "", authenticated: true});
         }
 
     });
