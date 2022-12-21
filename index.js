@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use('/users', userRouter);
 
-// check which env we are using
+// check which env we are  using
 const database_url = process.env.NODE_ENV === 'development' ? process.env.DATABASE_URL : process.env.CLOUD_DATABASE_URL;
 console.log("database url",database_url)
 
