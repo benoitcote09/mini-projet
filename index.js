@@ -16,6 +16,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use('/users', userRouter);
 
+
 const database_url = process.env.DATABASE_URL;
 
 mongoose.set('strictQuery', true);
