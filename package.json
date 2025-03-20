@@ -2,14 +2,19 @@
   "name": "project3",
   "version": "1.0.0",
   "description": "",
+  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "npm install express mongoose dotenv cors cookie-parser"
+  },
+  "license": "ISC",
+  "author": "abbes",
+  "type": "commonjs",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
